@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->enum('gender', ['Male', 'Female']);
             $table->decimal('contact_number', 10, 0);
-            $table->string('driving_license_number');
+            $table->string('driving_license_number')->nullable();
             $table->dropColumn('name');
         });
     }
