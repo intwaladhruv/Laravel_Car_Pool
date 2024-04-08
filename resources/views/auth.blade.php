@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authenticate</title>
+    <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/auth.css">
 </head>
 
@@ -15,6 +16,25 @@
             window.location = "/";
         </script>
     @else
+        <!-- Header Section -->
+        <header class="site-header">
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="#hero">RideShareLanding</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/#hero">Home</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/#features">Features</a></li>
+                    @auth
+                        <li><a href="/rides/create">Add Ride</a></li>
+                        <li><a href="/logout">Logout</a></li>
+                    @else
+                        <li><a href="/login">Login/Sign Up</a></li>
+                    @endauth
+                </ul>
+            </nav>
+        </header>
         <div class="form-container clearfix">
             <div class="form-column">
                 <h2>Registration</h2>
@@ -50,6 +70,26 @@
                 </form>
             </div>
         </div>
+        <!-- Footer Section -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>About RideShareLanding</h3>
+                    <p>Connecting journeys, creating experiences. Join us and make every trip an adventure.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/#hero">Home</a></li>
+                        <li><a href="/#about">About Us</a></li>
+                        <li><a href="/#features">Our Features</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 RideShareLanding. All rights reserved.</p>
+            </div>
+        </footer>
     @endauth
 </body>
 

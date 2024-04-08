@@ -20,9 +20,11 @@
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#features">Features</a></li>
-                <li><a href="/login">Login/Sign Up</a></li>
                 @auth
+                <li><a href="/rides">My Rides</a></li>
                 <li><a href="/logout">Logout</a></li>
+                @else
+                <li><a href="/login">Login/Sign Up</a></li>
                 @endauth
             </ul>
         </nav>
