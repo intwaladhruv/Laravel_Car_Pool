@@ -41,7 +41,7 @@ class RideController extends Controller
         $incoming_fields['user_id'] = auth()->id();
 
         Ride::create($incoming_fields);
-        return var_dump($incoming_fields);
+        return $this->index();
     }
 
     /**

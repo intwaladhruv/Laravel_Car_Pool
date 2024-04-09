@@ -23,7 +23,8 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'contact_number',
-        'gender'
+        'gender',
+        'role_id'
     ];
 
     /**
@@ -49,14 +50,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function roles()
+    public function role()
     {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     public function rides()
