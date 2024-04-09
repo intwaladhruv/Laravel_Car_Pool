@@ -49,16 +49,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class);
-    }
-
     public function rides()
     {
         return $this->hasMany(Ride::class, 'user_id');
