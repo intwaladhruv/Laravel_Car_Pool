@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\UserController;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,11 +10,13 @@ Route::get('/', function () {
 });
 
 Route::get('/register', function() {
-    return view('auth');
+    $roles = Role::all();
+    return view('auth', ['roles' => $roles]);
 });
 
 Route::get('/login', function() {
-    return view('auth');
+    $roles = Role::all();
+    return view('auth', ['roles' => $roles]);
 })->name('login');
 
 Route::post('/register', [UserController::class, 'register']);

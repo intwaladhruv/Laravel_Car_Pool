@@ -37,6 +37,9 @@
         </header>
         <div class="form-container clearfix">
             <div class="form-column">
+                @if ($errors)
+                    {{var_dump($errors->all());}}
+                @endif
                 <h2>Registration</h2>
                 <form action="/register" method="post">
                     @csrf
@@ -51,10 +54,11 @@
                     </select>
                     <input type="password" name="password" placeholder="Password" required>
                     <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-                    <select name="role" required>
+                    <select name="role_id" required>
                         <option value="">Select Role</option>
-                        <option value="driver">Driver</option>
-                        <option value="passenger">Passenger</option>
+                        @foreach ($roles as $role)
+                        <option value="{{$role['id']}}">{{ucfirst($role['name'])}}</option>
+                        @endforeach
                     </select>
                     <button type="submit" name="register">Register</button>
                 </form>
