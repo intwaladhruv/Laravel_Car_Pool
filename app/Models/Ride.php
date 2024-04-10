@@ -20,6 +20,7 @@ class Ride extends Model
         'start_at',
         'seats',
         'price',
-        'user_id'
+        'user_id',
+        'date'
     ];
 }

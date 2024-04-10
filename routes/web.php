@@ -24,7 +24,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get( '/logout', [UserController::class, 'logout']);
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::resource('rides', RideController::class)->only([
-        'index', 'create', 'store'
+    Route::resource('rides', RideController::class)->except([
+        'show'
     ]);;
 });

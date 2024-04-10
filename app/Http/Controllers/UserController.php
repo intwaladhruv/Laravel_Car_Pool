@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     public function register(Request $request)
     {
-        $incomingFields = $request->validate([
+        $role_id = Role::where('name', 'driver')->first()->id;
+        settype($role_id, 'string');
+        $fields = array(
             'firstname' => ['required', 'min:3', 'max:10'],
             'lastname' => ['required', 'min:3', 'max:10'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
@@ -19,14 +23,22 @@ class UserController extends Controller
             'gender' => ['required', Rule::in(['Male', 'Female'])],
             'contact_number' => ['required', 'regex:/^\d{10}$/'],
             'role_id' => ['required']
-        ]);
+        );
+
+        if ($role_id === $request['role_id'])
+        {
+            array_push($fields,[
+                'expiry_date' => ['required', 'date', 'after:today'],
+                'driving_license_number' => 'required']);
+        }
+
+        $incomingFields = $request->validate($fields);
 
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create($incomingFields);
 
         auth()->login($user);
         return redirect('/');
-        return "loggedin";
     }
 
     public function login(Request $request)
