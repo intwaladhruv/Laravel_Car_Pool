@@ -50,19 +50,22 @@
             background-color: #f9f9f9;
         }
 
-        /* Button styles */
-        .button {
+        button {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: #3CBC8D;
+            padding: 8px 17px;
+            font-size: 12px;
+            font-weight: bold;
             color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
+            background-color: #FF4136;
+            /* Red color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .button:hover {
-            background-color: #2b9660;
+        button:hover {
+            background-color: #D32F2F;
         }
     </style>
 </head>
@@ -79,8 +82,6 @@
                 @auth
                     <li><a href="/rides/create">Add Ride</a></li>
                     <li><a href="/logout">Logout</a></li>
-                @else
-                    <li><a href="/login">Login/Sign Up</a></li>
                 @endauth
             </ul>
         </nav>

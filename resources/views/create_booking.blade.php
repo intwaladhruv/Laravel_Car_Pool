@@ -23,11 +23,27 @@
         /* Container styles */
         .container {
             max-width: 400px;
-            margin: 20px auto;
+            margin: 30px auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .ride-details {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ride-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .ride-details p {
+            font-size: 16px;
+            margin-bottom: 8px;
         }
 
         /* Form input styles */
@@ -91,41 +107,29 @@
                 @auth
                     <li><a href="/rides">Rides</a></li>
                     <li><a href="/logout">Logout</a></li>
-                @else
-                    <li><a href="/login">Login/Sign Up</a></li>
                 @endauth
             </ul>
         </nav>
     </header>
     <div class="container">
-        <h1>Add a New Ride</h1>
-        <form action="{{ route('rides.store') }}" method="post">
+        <div class="ride-details">
+            <h2>Ride Details</h2>
+            <p><strong>Start Point:</strong> {{ ucfirst($ride->start) }}</p>
+            <p><strong>Destination:</strong> {{ ucfirst($ride->destination) }}</p>
+            <p><strong>Start Time:</strong> {{ $ride->start_at }}</p>
+            <p><strong>Date:</strong> {{ $ride->date }}</p>
+            <p><strong>Seats Available:</strong> {{ $ride->seats }}</p>
+            <p><strong>Price:</strong> ${{ $ride->price }}</p>
+        </div>
+
+        <h2>Book a New Ride</h2>
+        <form action="{{ route('bookings.store', $ride->id) }}" method="post">
             @csrf
             <div class="form-group">
-                <label for="start">Start Location:</label>
-                <input type="text" name="start" id="start">
-            </div>
-            <div class="form-group">
-                <label for="destination">Destination:</label>
-                <input type="text" name="destination" id="destination">
-            </div>
-            <div class="form-group">
-                <label for="start_at">Start Time:</label>
-                <input type="time" name="start_at" id="start_at">
-            </div>
-            <div class="form-group">
-                <label for="date">Date:</label>
-                <input type="date" name="date" id="date">
-            </div>
-            <div class="form-group">
-                <label for="seats">Available Seats:</label>
+                <label for="seats">Seats:</label>
                 <input type="number" name="seats" id="seats">
             </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" step="0.1" name="price" id="price">
-            </div>
-            <button type="submit">Add Ride</button>
+            <button type="submit">Book Ride</button>
         </form>
     </div>
     <!-- Footer Section -->

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\UserController;
 use App\Models\Role;
@@ -21,10 +22,14 @@ Route::get('/login', function() {
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::get( '/logout', [UserController::class, 'logout']);
+Route::get('/logout', [UserController::class, 'logout']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('rides', RideController::class)->except([
         'show', 'update', 'edit'
-    ]);;
+    ]);
+
+    Route::get('/bookings/{ride}/create', [BookingController::class, 'create']);
+    Route::post('bookings/{ride}/store', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('bookings', [BookingController::class, 'index']);
 });
