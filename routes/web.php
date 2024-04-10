@@ -25,6 +25,6 @@ Route::get( '/logout', [UserController::class, 'logout']);
 
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('rides', RideController::class)->except([
-        'show'
+        'show', 'update', 'edit'
     ]);;
 });

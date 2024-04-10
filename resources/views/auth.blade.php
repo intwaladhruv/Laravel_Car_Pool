@@ -7,6 +7,8 @@
     <title>Authenticate</title>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/auth.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -20,14 +22,13 @@
         <header class="site-header">
             <nav class="navbar">
                 <div class="logo">
-                    <a href="#hero">RideShareLanding</a>
+                    <a href="/">RideShareLanding</a>
                 </div>
                 <ul class="nav-links">
-                    <li><a href="/#hero">Home</a></li>
-                    <li><a href="/#about">About</a></li>
-                    <li><a href="/#features">Features</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">About</a></li>
+                    <li><a href="/">Features</a></li>
                     @auth
-                        <li><a href="/rides/create">Add Ride</a></li>
                         <li><a href="/logout">Logout</a></li>
                     @else
                         <li><a href="/login">Login/Sign Up</a></li>
@@ -54,14 +55,16 @@
                     </select>
                     <input type="password" name="password" placeholder="Password" required>
                     <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-                    <select name="role_id" required>
+                    <select name="role_id" id="role" required>
                         <option value="">Select Role</option>
                         @foreach ($roles as $role)
                         <option value="{{$role['id']}}">{{ucfirst($role['name'])}}</option>
                         @endforeach
                     </select>
-                    <input type="text" name="driving_license_number" id="driving_license_number" placeholder="Driving License">
-                    <input type="text" name="expiry_date" id="expiry_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Expiry Date">
+                    <div id="driverControls">
+                        <input type="text" name="driving_license_number" id="driving_license_number" placeholder="Driving License">
+                        <input type="text" name="expiry_date" id="expiry_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Expiry Date">
+                    </div>
                     <button type="submit" name="register">Register</button>
                 </form>
             </div>
@@ -97,6 +100,23 @@
             </div>
         </footer>
     @endauth
+    <script>
+        $(document).ready(function(){
+            $("#driverControls").hide();
+            $("#role").change(function(){
+                var role = $(this).find(":selected").text();
+                changeUI(role);
+            });
+        });
+
+        function changeUI(role){
+            if(role == "Driver"){
+                $("#driverControls").show();
+            }else{
+                $("#driverControls").hide();
+            }
+        }
+    </script>
 </body>
 
 </html>
