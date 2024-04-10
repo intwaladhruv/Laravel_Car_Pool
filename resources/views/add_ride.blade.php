@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,6 +50,17 @@
             font-size: 14px;
         }
 
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 24px 24px;
+        }
+
         /* Submit button styles */
         button[type="submit"] {
             background-color: #3CBC8D;
@@ -65,6 +77,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Add a New Ride</h1>
@@ -83,6 +96,10 @@
                 <input type="time" name="start_at" id="start_at">
             </div>
             <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" name="date" id="date">
+            </div>
+            <div class="form-group">
                 <label for="seats">Available Seats:</label>
                 <input type="number" name="seats" id="seats">
             </div>
@@ -94,4 +111,5 @@
         </form>
     </div>
 </body>
+
 </html>

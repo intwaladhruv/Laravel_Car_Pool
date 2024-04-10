@@ -36,6 +36,7 @@ class RideController extends Controller
             'start_at' => 'required|date_format:H:i',
             'seats' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0.1',
+            'date' => 'required|date|after:today'
         ]);
 
         $incoming_fields['user_id'] = auth()->id();
@@ -71,8 +72,12 @@ class RideController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
+    public function destroy(Ride $ride)
+    {
+        if(auth()->user()->id === $ride['user_id']) {
+            $ride->delete();
+        }
+
+        return redirect(route('rides.index'));
+    }
 }

@@ -92,23 +92,25 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Start Location</th>
                     <th>Destination</th>
                     <th>Start Time</th>
+                    <th>Date</th>
                     <th>Available Seats</th>
                     <th>Price</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($rides as $ride)
                     <tr>
-                        <td>{{ $ride->id }}</td>
                         <td>{{ $ride->start }}</td>
                         <td>{{ $ride->destination }}</td>
                         <td>{{ $ride->start_at }}</td>
                         <td>{{ $ride->seats }}</td>
+                        <td>{{ $ride->date }}</td>
                         <td>{{ $ride->price }}</td>
+                        <td> <form action="{{route('rides.destroy', ['ride' => $ride->id]) }}" method="post">@csrf @method('DELETE')<button>Update</button></form></td>
                     </tr>
                 @endforeach
             </tbody>

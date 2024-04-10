@@ -60,6 +60,8 @@
                         <option value="{{$role['id']}}">{{ucfirst($role['name'])}}</option>
                         @endforeach
                     </select>
+                    <input type="text" name="driving_license_number" id="driving_license_number" placeholder="Driving License">
+                    <input type="text" name="expiry_date" id="expiry_date" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Expiry Date">
                     <button type="submit" name="register">Register</button>
                 </form>
             </div>

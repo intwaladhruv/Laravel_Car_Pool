@@ -71,6 +71,18 @@
     color: #333; /* Adjust the text color as needed */
 }
 
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 24px 24px;
+}
+
 .error {
     color: red;
 }

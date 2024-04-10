@@ -24,7 +24,9 @@ class User extends Authenticatable
         'lastname',
         'contact_number',
         'gender',
-        'role_id'
+        'role_id',
+        'driving_license_number',
+        'expiry_date'
     ];
 
     /**
