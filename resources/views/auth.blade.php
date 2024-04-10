@@ -28,11 +28,7 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/">About</a></li>
                     <li><a href="/">Features</a></li>
-                    @auth
-                        <li><a href="/logout">Logout</a></li>
-                    @else
-                        <li><a href="/login">Login/Sign Up</a></li>
-                    @endauth
+                    <li><a href="/login">Login/Sign Up</a></li>
                 </ul>
             </nav>
         </header>

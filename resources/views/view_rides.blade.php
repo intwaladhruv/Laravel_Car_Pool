@@ -12,7 +12,6 @@
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
             box-sizing: border-box;
-            /* Ensure padding is included in the element's total width */
         }
 
         .box {
@@ -49,6 +48,32 @@
             background-color: #fff;
             /* Add a background color to rides for better contrast */
         }
+
+        button {
+            display: inline-block;
+            padding: 8px 17px;
+            font-size: 12px;
+            color: #fff;
+            background-color: #0074D9;
+            /* Blue color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            /* Change to your desired disabled color */
+            cursor: not-allowed;
+            /* Show a "not-allowed" cursor */
+            opacity: 0.5;
+            /* Reduce opacity to indicate disabled state */
+        }
     </style>
 </head>
 
@@ -62,7 +87,7 @@
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
                 @auth
-                    <li><a href="/rides">My Ride</a></li>
+                    <li><a href="/bookings">My Bookings</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login/Sign Up</a></li>
@@ -76,12 +101,19 @@
         <div class="container">
             @foreach ($rides as $ride)
                 <div class="ride">
-                    {{-- <img src="data:image/jpeg;base64,<?php echo base64_encode($i['image']); ?>" alt="Property Image" width="150"> --}}
                     <strong>{{ ucfirst($ride->start) }} - {{ ucfirst($ride->destination) }}</strong>
                     <p>Date: {{ $ride->date }}</p>
                     <p>Start time: {{ $ride->start_at }}</p>
-                    <p>Available seats: {{ $ride->seats }}</p>
+                    <p>Available seats: {{ $ride->seats }}
+                        @if ($ride->seats === 0)
+                            <span style="color: red;">(unavailable)</span>
+                        @endif
+                    </p>
                     <p>Price: ${{ $ride->price }}</p>
+                    <button onclick="window.location.href='/bookings/{{ $ride->id }}/create'"
+                        @if ($ride->seats === 0) disabled @endif>
+                        Book
+                    </button>
                 </div>
             @endforeach
         </div>

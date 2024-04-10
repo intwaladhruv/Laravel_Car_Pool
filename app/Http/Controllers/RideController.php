@@ -27,7 +27,11 @@ class RideController extends Controller
      */
     public function create()
     {
-        return view('add_ride');
+        if (auth()->user()->role->name == 'driver') {
+            return view('add_ride');
+        } elseif(auth()->user()->role->name == 'passenger') {
+            return redirect('/rides');
+        }
     }
 
     /**
