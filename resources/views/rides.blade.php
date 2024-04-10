@@ -72,12 +72,10 @@
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="#hero">RideShareLanding</a>
+                <a href="/">RideShareLanding</a>
             </div>
             <ul class="nav-links">
-                <li><a href="/#hero">Home</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#features">Features</a></li>
+                <li><a href="/">Home</a></li>
                 @auth
                     <li><a href="/rides/create">Add Ride</a></li>
                     <li><a href="/logout">Logout</a></li>
@@ -110,7 +108,10 @@
                         <td>{{ $ride->seats }}</td>
                         <td>{{ $ride->date }}</td>
                         <td>{{ $ride->price }}</td>
-                        <td> <form action="{{route('rides.destroy', ['ride' => $ride->id]) }}" method="post">@csrf @method('DELETE')<button>Update</button></form></td>
+                        <td>
+                            <form action="{{ route('rides.destroy', ['ride' => $ride->id]) }}" method="post">@csrf
+                                @method('DELETE')<button>Delete</button></form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

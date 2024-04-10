@@ -13,8 +13,13 @@ class RideController extends Controller
      */
     public function index()
     {
-        $rides = auth()->user()->rides()->get();
-        return view('rides', ['rides' => $rides]);
+        if (auth()->user()->role->name == 'driver') {
+            $rides = auth()->user()->rides()->latest()->get();
+            return view('rides', ['rides' => $rides]);
+        } elseif(auth()->user()->role->name == 'passenger') {
+            $rides = Ride::all()->take(10);
+            return view('view_rides', ['rides' => $rides]);
+        }
     }
 
     /**
@@ -30,18 +35,20 @@ class RideController extends Controller
      */
     public function store(Request $request)
     {
-        $incoming_fields =$request->validate([
-            'start' => 'required|string|max:255',
-            'destination' => 'required|string|max:255',
-            'start_at' => 'required|date_format:H:i',
-            'seats' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0.1',
-            'date' => 'required|date|after:today'
-        ]);
+        if (auth()->user()->role->name == 'driver') {
+            $incoming_fields = $request->validate([
+                'start' => 'required|string|max:255',
+                'destination' => 'required|string|max:255',
+                'start_at' => 'required|date_format:H:i',
+                'seats' => 'required|integer|min:1',
+                'price' => 'required|numeric|min:0.1',
+                'date' => 'required|date|after:today'
+            ]);
 
-        $incoming_fields['user_id'] = auth()->id();
+            $incoming_fields['user_id'] = auth()->id();
 
-        Ride::create($incoming_fields);
+            Ride::create($incoming_fields);
+        }
         return $this->index();
     }
 
@@ -74,7 +81,7 @@ class RideController extends Controller
      */
     public function destroy(Ride $ride)
     {
-        if(auth()->user()->id === $ride['user_id']) {
+        if (auth()->user()->id === $ride['user_id']) {
             $ride->delete();
         }
 

@@ -38,7 +38,7 @@ class UserController extends Controller
         $user = User::create($incomingFields);
 
         auth()->login($user);
-        return redirect('/');
+        return redirect('/rides');
     }
 
     public function login(Request $request)
@@ -50,7 +50,7 @@ class UserController extends Controller
 
         if (auth()->attempt(['email' => $incomingFields['email'], 'password' => $incomingFields['password']])) {
             $request->session()->regenerate();
-            return redirect('/');
+            return redirect('/rides');
         }
 
         return redirect('/login');
