@@ -123,7 +123,7 @@
             <p><strong>Price:</strong> ${{ $ride->price }}</p>
         </div>
 
-        <h2>Book a New Ride</h2>
+        <h3>Book a Ride</h3>
         <form action="{{ route('bookings.store', $ride->id) }}" method="post">
             @csrf
             <div class="form-group">

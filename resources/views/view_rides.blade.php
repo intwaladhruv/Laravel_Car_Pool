@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="/css/index.css">
     <title>My Rides</title>
     <style>
         body {
@@ -23,30 +23,21 @@
             margin-left: 30px;
         }
 
-        .container {
+        .rides-container {
             display: flex;
             flex-wrap: wrap;
-            /* Allow flex items to wrap to the next line */
-            justify-content: space-between;
-            /* Distribute flex items evenly across the container */
+            justify-content: space-evenly;
             max-width: 1200px;
-            /* Limit the maximum width of the container */
             margin: 0 auto;
-            /* Center the container horizontally */
         }
 
         .ride {
             border: 1px solid #ccc;
             padding: 20px;
-            /* Increase padding for better spacing */
             margin-bottom: 20px;
-            /* Add margin between ride items */
             width: calc(33.33% - 20px);
-            /* Limit flex items to one-third of the container width with margins */
             box-sizing: border-box;
-            /* Ensure padding is included in the element's total width */
             background-color: #fff;
-            /* Add a background color to rides for better contrast */
         }
 
         button {
@@ -55,7 +46,6 @@
             font-size: 12px;
             color: #fff;
             background-color: #0074D9;
-            /* Blue color */
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -68,11 +58,53 @@
 
         button:disabled {
             background-color: #ccc;
-            /* Change to your desired disabled color */
             cursor: not-allowed;
-            /* Show a "not-allowed" cursor */
             opacity: 0.5;
-            /* Reduce opacity to indicate disabled state */
+        }
+
+        .search-section * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .search-section {
+            background-image: url('/images/back.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-container input[type="text"],
+        .search-container input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 200px;
+        }
+
+        .search-container #submit-button {
+            padding: 10px 20px;
+            background-color: #0074D9;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-container input::placeholder {
+            color: #999;
         }
     </style>
 </head>
@@ -97,9 +129,21 @@
         </nav>
     </header>
 
+    <h1>Rides</h1>
+    <div class="search-section">
+        <div class="search-container">
+            <form action="/search/rides" method="post">
+                @csrf
+                <input type="text" name="start" id="start" value="{{isset($fields) ? $fields['start'] : ''}}" placeholder="From">
+                <input type="text" name="destination" id="destination" value="{{isset($fields) ? $fields['destination'] : ''}}" placeholder="To">
+                <input type="text" name="date" id="date" onfocus="(this.type='date')" onblur="(this.type='text')" value="{{isset($fields) ? $fields['date'] : ''}}"
+                    placeholder="Ride Date">
+                <button id="submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
     <div class="box">
-        <h1>Rides</h1>
-        <div class="container">
+        <div class="rides-container">
             @foreach ($rides as $ride)
                 <div class="ride">
                     <strong>{{ ucfirst($ride->start) }} - {{ ucfirst($ride->destination) }}</strong>
@@ -141,6 +185,26 @@
             <p>&copy; 2024 RideShareLanding. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        const startInput = document.getElementById('start');
+        const destinationInput = document.getElementById('destination');
+        const rideDateInput = document.getElementById('date');
+        const submitButton = document.getElementById('submit-button');
+
+        submitButton.disabled = true;
+        // Event listener for input fields
+        [startInput, destinationInput, rideDateInput].forEach(input => {
+            input.addEventListener('input', validateForm);
+        });
+
+        function validateForm() {
+            const startValid = startInput.value.length >= 3;
+            const destinationValid = destinationInput.value.length >= 3;
+            const rideDateValid = new Date(rideDateInput.value) > new Date();
+            
+            submitButton.disabled = !((startValid && destinationValid) || rideDateValid);
+        }
+    </script>
 </body>
 
 </html>
