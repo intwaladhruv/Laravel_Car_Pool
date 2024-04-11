@@ -22,13 +22,12 @@
                 </div>
                 <ul class="nav-links">
                     <li><a href="/">Home</a></li>
-                    <li><a href="/">About</a></li>
-                    <li><a href="/">Features</a></li>
                     @if ($user->role->name === 'driver')
+                        <li><a href="/rides/create">Add Ride</a></li>
                         <li><a href="/rides">My Rides</a></li>
                     @else
                         <li><a href="/rides">Rides</a></li>
-                        <li><a href="/bookings">Bookings</a></li>
+                        <li><a href="/bookings">My Bookings</a></li>
                     @endif
                     <li><a href="/logout">Logout</a></li>
                 </ul>
