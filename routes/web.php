@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\RideController;
 use App\Http\Controllers\UserController;
 use App\Models\Role;
@@ -25,6 +26,10 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/logout', [UserController::class, 'logout']);
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('/user/edit', [UserController::class, 'edit']);
+    Route::post('/user/update', [UserController::class, 'update']);
+
+    Route::post('car/store', [CarController::class, 'store']);
     Route::resource('rides', RideController::class)->except([
         'show', 'update', 'edit'
     ]);

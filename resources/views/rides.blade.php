@@ -81,6 +81,7 @@
                 <li><a href="/">Home</a></li>
                 @auth
                     <li><a href="/rides/create">Add Ride</a></li>
+                    <li><a href="/user/edit">Edit User</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @endauth
             </ul>

@@ -88,6 +88,7 @@
                 <li><a href="/">Home</a></li>
                 @auth
                     <li><a href="/bookings">My Bookings</a></li>
+                    <li><a href="/user/edit">Edit User</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login/Sign Up</a></li>
@@ -102,6 +103,7 @@
             @foreach ($rides as $ride)
                 <div class="ride">
                     <strong>{{ ucfirst($ride->start) }} - {{ ucfirst($ride->destination) }}</strong>
+                    <p>Car: {{ $ride->user->car->to_string() }}</p>
                     <p>Date: {{ $ride->date }}</p>
                     <p>Start time: {{ $ride->start_at }}</p>
                     <p>Available seats: {{ $ride->seats }}
