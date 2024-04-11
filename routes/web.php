@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth'], function() {
         'show', 'update', 'edit'
     ]);
 
+    Route::get('search/rides', [RideController::class, 'index']);
+    Route::post('search/rides', [RideController::class, 'search']);
+
     Route::get('/bookings/{ride}/create', [BookingController::class, 'create']);
     Route::post('bookings/{ride}/store', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('bookings', [BookingController::class, 'index']);

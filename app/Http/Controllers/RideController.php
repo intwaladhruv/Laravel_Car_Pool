@@ -16,7 +16,7 @@ class RideController extends Controller
         if (auth()->user()->role->name == 'driver') {
             $rides = auth()->user()->rides()->latest()->get();
             return view('rides', ['rides' => $rides]);
-        } elseif(auth()->user()->role->name == 'passenger') {
+        } elseif (auth()->user()->role->name == 'passenger') {
             $rides = Ride::all()->take(10);
             return view('view_rides', ['rides' => $rides]);
         }
@@ -29,7 +29,7 @@ class RideController extends Controller
     {
         if (auth()->user()->role->name == 'driver') {
             return view('add_ride');
-        } elseif(auth()->user()->role->name == 'passenger') {
+        } elseif (auth()->user()->role->name == 'passenger') {
             return redirect('/rides');
         }
     }
@@ -56,33 +56,36 @@ class RideController extends Controller
         return $this->index();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(string $id)
-    // {
-    //     //
-    // }
+    public function search(Request $request)
+    {
+        if (auth()->user()->role->name == 'passenger') {
+            $fields = $request->validate([
+                'start' => 'string|nullable|min:3|max:255',
+                'destination' => 'string|nullable|min:3|max:255',
+                'date' => 'date|nullable|after:today'
+            ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    // public function edit(string $id)
-    // {
-    //     //
-    // }
+            $startLocation = $fields['start'];
+            $destination = $fields['destination'];
+            $date = $fields['date'];
 
-    /**
-     * Update the specified resource in storage.
-     */
-    // public function update(Request $request, string $id)
-    // {
-    //     //
-    // }
+            $rides = Ride::where(function ($query) use ($startLocation, $destination, $date) {
+                if ($startLocation && $destination) {
+                    $query->where('start', 'like', "%$startLocation%")
+                        ->where('destination', 'like', "%$destination%");
+                }
+                if ($startLocation && $destination && $date) {
+                    $query->WhereDate('date', $date);
+                } elseif ($date) {
+                    $query->orWhereDate('date', $date);
+                }
+            })->get();
+            return view('view_rides', ['rides' => $rides, 'fields' => $fields]);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+        return $this->index();
+    }
+
     public function destroy(Ride $ride)
     {
         if (auth()->user()->id === $ride['user_id']) {
