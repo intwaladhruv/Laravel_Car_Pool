@@ -27,6 +27,7 @@
                         <li><a href="/rides">Rides</a></li>
                         <li><a href="/bookings">Bookings</a></li>
                     @endif
+                    <li><a href="/user/edit">Edit User</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login/Sign Up</a></li>

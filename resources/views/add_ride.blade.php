@@ -90,6 +90,7 @@
                 <li><a href="/">Home</a></li>
                 @auth
                     <li><a href="/rides">Rides</a></li>
+                    <li><a href="/user/edit">Edit User</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @else
                     <li><a href="/login">Login/Sign Up</a></li>
@@ -98,6 +99,12 @@
         </nav>
     </header>
     <div class="container">
+        @if (auth()->user()->car === null)
+            <script>
+                alert('Need a car to add ride')
+                window.location.href = "/user/edit";
+            </script>
+        @endif
         <h1>Add a New Ride</h1>
         <form action="{{ route('rides.store') }}" method="post">
             @csrf

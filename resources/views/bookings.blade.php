@@ -63,6 +63,7 @@
                 <li><a href="/">Home</a></li>
                 @auth
                     <li><a href="/rides">Rides</a></li>
+                    <li><a href="/user/edit">Edit User</a></li>
                     <li><a href="/logout">Logout</a></li>
                 @endauth
             </ul>
@@ -73,10 +74,11 @@
         @foreach ($bookings as $booking)
         @php
             $ride = $booking->ride;
-            // var_dump($booking->ride->start);
         @endphp
         <div class="card">
             <h3>{{ucfirst($ride->start)}} - {{ucfirst($ride->destination)}}</h3>
+            <p><strong>Car:</strong> {{$ride->user->car->to_string()}}</p>
+            <p><strong>Car Number:</strong> {{$ride->user->car->number}}</p>
             <p><strong>Booking Date:</strong> {{$booking->booking_date}}</p>
             <p><strong>Seats booked:</strong> {{$booking->seats}}</p>
             <p class="price"><strong>Price:</strong> ${{$ride->price*$booking->seats}}</p>

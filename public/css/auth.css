@@ -15,6 +15,12 @@
     border-radius: 5px;
 }
 
+.form-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust min and max width as needed */
+    grid-gap: 20px;
+}
+
 /* Form input styles */
 .form-container input[type="text"],
 .form-container input[type="email"],
@@ -44,20 +50,6 @@
 .form-container h2 {
     font-size: 24px;
     margin-bottom: 15px;
-}
-
-/* Form columns */
-.form-column {
-    float: left;
-    width: 50%;
-    padding: 0 10px;
-}
-
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
 }
 
 /* Form select styles */
