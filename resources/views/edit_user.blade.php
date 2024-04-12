@@ -30,7 +30,7 @@
         <header class="site-header">
             <nav class="navbar">
                 <div class="logo">
-                    <a href="/">RideShareLanding</a>
+                    <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
                 </div>
                 <ul class="nav-links">
                     <li><a href="/">Home</a></li>
@@ -46,6 +46,18 @@
             </nav>
         </header>
         <div class="form-container">
+            @if ($errors->any())
+                <div class="error-section">
+                    <div class="error-message">
+                        <h3>Errors</h3>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <div class="form-wrapper">
                 <div class="form-column edit-user">
                     <h2>Edit User</h2>
@@ -61,9 +73,9 @@
                         @if ($user->role->name === 'driver')
                             <div id="driverControls">
                                 <input type="text" name="driving_license_number" id="driving_license_number"
-                                    placeholder="Driving License">
+                                    placeholder="Driving License" value="{{ $user->driving_license_number }}">
                                 <input type="text" name="expiry_date" id="expiry_date" onfocus="(this.type='date')"
-                                    onblur="(this.type='text')" placeholder="Expiry Date">
+                                    onblur="(this.type='text')" placeholder="Expiry Date" value="{{ $user->expiry_date }}">
                             </div>
                         @endif
                         <button type="submit" name="update">Save</button>
@@ -85,13 +97,14 @@
                             value="{{ $user->car ? $user->car->model : '' }}" required><br>
                         <input type="text" name="color" placeholder="Color"
                             value="{{ $user->car ? $user->car->color : '' }}" required><br>
-                        <input type="text" name="year" placeholder="Year"
+                        <input type="number" name="year" placeholder="Year" min="1900" max="{{ date('Y') }}"
                             value="{{ $user->car ? $user->car->year : '' }}" required><br>
                         <input type="text" name="number" placeholder="Number"
                             value="{{ $user->car ? $user->car->number : '' }}" required><br>
-                        <input type="file" name="photo" placeholder="Image"
-                            {{ $user->car === null ? 'required' : '' }}><br>
-                        <img src="/storage/{{ $user->car->photo_name }}" alt="Car Photo">
+                        <input type="file" name="photo" placeholder="Image"><br>
+                        @if ($user->car !== null)
+                            <img src="/storage/{{ $user->car->photo_name }}" alt="Car Photo">
+                        @endif
                         <button type="submit" name="car_save">Submit</button>
                         </form>
                     </div>

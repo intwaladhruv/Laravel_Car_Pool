@@ -84,7 +84,7 @@
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="/">RideShareLanding</a>
+                <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
@@ -105,32 +105,44 @@
                 window.location.href = "/user/edit";
             </script>
         @endif
+        @if ($errors->any())
+            <div class="error-section">
+                <div class="error-message">
+                    <h3>Errors</h3>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         <h1>Add a New Ride</h1>
         <form action="{{ route('rides.store') }}" method="post">
             @csrf
             <div class="form-group">
                 <label for="start">Start Location:</label>
-                <input type="text" name="start" id="start">
+                <input type="text" name="start" id="start" required>
             </div>
             <div class="form-group">
                 <label for="destination">Destination:</label>
-                <input type="text" name="destination" id="destination">
+                <input type="text" name="destination" id="destination" required>
             </div>
             <div class="form-group">
                 <label for="start_at">Start Time:</label>
-                <input type="time" name="start_at" id="start_at">
+                <input type="time" name="start_at" id="start_at" required>
             </div>
             <div class="form-group">
                 <label for="date">Date:</label>
-                <input type="date" name="date" id="date">
+                <input type="date" name="date" id="date" required>
             </div>
             <div class="form-group">
                 <label for="seats">Available Seats:</label>
-                <input type="number" name="seats" id="seats">
+                <input type="number" name="seats" id="seats" required>
             </div>
             <div class="form-group">
                 <label for="price">Price:</label>
-                <input type="number" step="0.1" name="price" id="price">
+                <input type="number" step="0.1" name="price" id="price" required>
             </div>
             <button type="submit">Add Ride</button>
         </form>

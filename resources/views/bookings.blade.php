@@ -7,7 +7,6 @@
     <title>Ride Bookings</title>
     <link rel="stylesheet" href="/css/index.css">
     <style>
-
         h1 {
             margin-top: 20px;
             margin-left: 20px;
@@ -49,6 +48,17 @@
         .card .price {
             font-weight: bold;
         }
+
+        .card img {
+            width: 100%;
+            /* Make sure the image fills the container */
+            height: auto;
+            /* Maintain aspect ratio */
+            border-radius: 5px;
+            /* Rounded corners */
+            margin-bottom: 10px;
+            /* Add some spacing below the image */
+        }
     </style>
 </head>
 
@@ -57,7 +67,7 @@
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="/">RideShareLanding</a>
+                <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
@@ -72,18 +82,20 @@
     <h1>My Bookings</h1>
     <div class="cards-container">
         @foreach ($bookings as $booking)
-        @php
-            $ride = $booking->ride;
-        @endphp
-        <div class="card">
-            <h3>{{ucfirst($ride->start)}} - {{ucfirst($ride->destination)}}</h3>
-            <p><strong>Car:</strong> {{$ride->user->car->to_string()}}</p>
-            <p><strong>Car Number:</strong> {{$ride->user->car->number}}</p>
-            <p><strong>Booking Date:</strong> {{$booking->booking_date}}</p>
-            <p><strong>Seats booked:</strong> {{$booking->seats}}</p>
-            <p class="price"><strong>Price:</strong> ${{$ride->price*$booking->seats}}</p>
-            <p><strong>Driver:</strong> {{$ride->user->firstname}} {{$ride->user->lastname}}</p>
-        </div>
+            @php
+                $ride = $booking->ride;
+            @endphp
+            <div class="card">
+                <img src="/storage/{{ $ride->user->car->photo_name }}" alt="Car Photo">
+                <h3>{{ ucfirst($ride->start) }} - {{ ucfirst($ride->destination) }}</h3>
+                <p><strong>Car:</strong> {{ $ride->user->car->to_string() }}</p>
+                <p><strong>Car Number:</strong> {{ $ride->user->car->number }}</p>
+                <p><strong>Booking Date:</strong> {{ $booking->booking_date }}</p>
+                <p><strong>Seats booked:</strong> {{ $booking->seats }}</p>
+                <p class="price"><strong>Price:</strong> ${{ $ride->price * $booking->seats }}</p>
+                <p><strong>Driver:</strong> {{ $ride->user->firstname }} {{ $ride->user->lastname }}</p>
+                <p><strong>Phone:</strong> {{ $ride->user->contact_number }}</p>
+            </div>
         @endforeach
 
     </div>

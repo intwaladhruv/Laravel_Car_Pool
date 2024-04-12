@@ -100,7 +100,7 @@
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="/">RideShareLanding</a>
+                <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
@@ -124,11 +124,23 @@
         </div>
 
         <h3>Book a Ride</h3>
+        @if ($errors->any())
+            <div class="error-section">
+                <div class="error-message">
+                    <h3>Errors</h3>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
         <form action="{{ route('bookings.store', $ride->id) }}" method="post">
             @csrf
             <div class="form-group">
                 <label for="seats">Seats:</label>
-                <input type="number" name="seats" id="seats">
+                <input type="number" name="seats" id="seats" required>
             </div>
             <button type="submit">Book Ride</button>
         </form>

@@ -14,7 +14,7 @@
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="#hero">RideShareLanding</a>
+                <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="#hero">Home</a></li>
@@ -54,7 +54,6 @@
                 fellow travelers to share rides, save costs, and reduce our carbon footprint. Join our
                 community of explorers and make every journey memorable.
             </p>
-            <!-- Add an image related to 'About Us' here -->
         </div>
     </section>
 

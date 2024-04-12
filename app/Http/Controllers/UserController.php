@@ -16,14 +16,6 @@ class UserController extends Controller
         $role_id = Role::where('name', 'driver')->first()->id;
         settype($role_id, 'string');
 
-        $fields = [];
-        if ($role_id === $request['role_id']) {
-            $fields = $request->validate([
-                'expiry_date' => ['required', 'date', 'after:today'],
-                'driving_license_number' => 'required'
-            ]);
-        }
-
         $incomingFields = $request->validate([
             'firstname' => ['required', 'min:3', 'max:10'],
             'lastname' => ['required', 'min:3', 'max:10'],
@@ -33,6 +25,14 @@ class UserController extends Controller
             'contact_number' => ['required', 'regex:/^\d{10}$/'],
             'role_id' => ['required']
         ]);
+
+        $fields = [];
+        if ($role_id === $request['role_id']) {
+            $fields = $request->validate([
+                'expiry_date' => ['required', 'date', 'after:today'],
+                'driving_license_number' => 'required'
+            ]);
+        }
 
         $incomingFields['password'] = bcrypt($incomingFields['password']);
         $user = User::create(array_merge($incomingFields, $fields));
@@ -53,7 +53,7 @@ class UserController extends Controller
             return redirect('/rides');
         }
 
-        return redirect('/login');
+        return redirect('/login')->withErrors(['error' => 'Invalid email or password']);
     }
 
     public function logout()
@@ -77,7 +77,17 @@ class UserController extends Controller
 
         $incomingFields = $request->validate($fields);
 
-        auth()->user()->update($incomingFields);
+        $role_id = Role::where('name', 'driver')->first()->id;
+
+        $fields = [];
+        if ($role_id === auth()->user()->role_id) {
+            $fields = $request->validate([
+                'expiry_date' => ['required', 'date', 'after:today'],
+                'driving_license_number' => 'required'
+            ]);
+        }
+
+        auth()->user()->update(array_merge($incomingFields, $fields));
         return redirect("/user/edit");
     }
 }
