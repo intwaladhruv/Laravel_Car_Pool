@@ -40,6 +40,12 @@
             background-color: #fff;
         }
 
+        .ride img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
         button {
             display: inline-block;
             padding: 8px 17px;
@@ -103,6 +109,11 @@
             font-size: 16px;
         }
 
+        #submit-button:disabled {
+            cursor: default;
+            opacity: 70%;
+        }
+
         .search-container input::placeholder {
             color: #999;
         }
@@ -134,9 +145,12 @@
         <div class="search-container">
             <form action="/search/rides" method="post">
                 @csrf
-                <input type="text" name="start" id="start" value="{{isset($fields) ? $fields['start'] : ''}}" placeholder="From">
-                <input type="text" name="destination" id="destination" value="{{isset($fields) ? $fields['destination'] : ''}}" placeholder="To">
-                <input type="text" name="date" id="date" onfocus="(this.type='date')" onblur="(this.type='text')" value="{{isset($fields) ? $fields['date'] : ''}}"
+                <input type="text" name="start" id="start" value="{{ isset($fields) ? $fields['start'] : '' }}"
+                    placeholder="From">
+                <input type="text" name="destination" id="destination"
+                    value="{{ isset($fields) ? $fields['destination'] : '' }}" placeholder="To">
+                <input type="text" name="date" id="date" onfocus="(this.type='date')"
+                    onblur="(this.type='text')" value="{{ isset($fields) ? $fields['date'] : '' }}"
                     placeholder="Ride Date">
                 <button id="submit-button">Submit</button>
             </form>
@@ -146,6 +160,7 @@
         <div class="rides-container">
             @foreach ($rides as $ride)
                 <div class="ride">
+                    <img src="/storage/{{ $ride->user->car->photo_name }}" alt="Car Photo">
                     <strong>{{ ucfirst($ride->start) }} - {{ ucfirst($ride->destination) }}</strong>
                     <p>Car: {{ $ride->user->car->to_string() }}</p>
                     <p>Date: {{ $ride->date }}</p>
@@ -201,7 +216,7 @@
             const startValid = startInput.value.length >= 3;
             const destinationValid = destinationInput.value.length >= 3;
             const rideDateValid = new Date(rideDateInput.value) > new Date();
-            
+
             submitButton.disabled = !((startValid && destinationValid) || rideDateValid);
         }
     </script>

@@ -19,5 +19,5 @@ class Car extends Model
         return $this->brand.' '.$this->model.' ('.$this->color.')';
     }
 
-    protected $fillable = ['brand', 'model', 'color', 'year', 'number', 'user_id'];
+    protected $fillable = ['brand', 'model', 'color', 'year', 'number', 'user_id', 'photo', 'photo_name'];
 }
