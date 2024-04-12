@@ -41,8 +41,8 @@ class RideController extends Controller
     {
         if (auth()->user()->role->name == 'driver') {
             $incoming_fields = $request->validate([
-                'start' => 'required|string|max:255',
-                'destination' => 'required|string|max:255',
+                'start' => 'required|string|min:3|max:255',
+                'destination' => 'required|string|min:3|max:255',
                 'start_at' => 'required|date_format:H:i',
                 'seats' => 'required|integer|min:1',
                 'price' => 'required|numeric|min:0.1',

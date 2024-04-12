@@ -22,8 +22,17 @@ class CarController extends Controller
             'photo' => 'required|image'
         ]);
 
+        if(isset($incoming_fields['photo'])) 
+        {
+            $imageName = time() . auth()->id();
+
+            $request->photo->move(public_path('storage'), $imageName);
+            $incoming_fields['photo_name'] = $imageName;
+            unset($incoming_fields['photo']);
+        }
+        
         $incoming_fields['user_id'] = auth()->id();
-        $incoming_fields['photo'] = file_get_contents($request->file('photo'));
+        
         Car::create($incoming_fields);
 
         return redirect("/user/edit");
@@ -38,20 +47,19 @@ class CarController extends Controller
             'brand' => 'required|string',
             'model' => 'required|string',
             'color' => 'required|string',
-            'year' => 'required|string',
+            'year' => 'required|digits:4|integer|min:1900|max:'. date('Y'),
             'number' => 'required|string',
             'photo' => 'image'
         ]);
 
         if(isset($incoming_fields['photo'])) 
         {
-            $imageName = time() . '.' . auth()->id() . $request->photo->extension();
+            $imageName = time() . auth()->id();
 
             $request->photo->move(public_path('storage'), $imageName);
             $incoming_fields['photo_name'] = $imageName;
             unset($incoming_fields['photo']);
         }
-
 
         auth()->user()->car->update($incoming_fields);
 

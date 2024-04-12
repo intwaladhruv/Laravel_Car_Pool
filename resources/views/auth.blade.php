@@ -22,7 +22,7 @@
         <header class="site-header">
             <nav class="navbar">
                 <div class="logo">
-                    <a href="/">RideShareLanding</a>
+                    <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
                 </div>
                 <ul class="nav-links">
                     <li><a href="/">Home</a></li>
@@ -33,11 +33,20 @@
             </nav>
         </header>
         <div class="form-container ">
+            @if ($errors->any())
+                <div class="error-section">
+                    <div class="error-message">
+                        <h3>Errors</h3>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
             <div class="form-wrapper">
                 <div class="form-column">
-                    @if ($errors)
-                        {{ var_dump($errors->all()) }}
-                    @endif
                     <h2>Registration</h2>
                     <form action="/register" method="post">
                         @csrf

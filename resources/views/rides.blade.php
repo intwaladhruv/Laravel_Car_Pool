@@ -75,7 +75,7 @@
     <header class="site-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="/">RideShareLanding</a>
+                <a href="/"><img src="/images/ride-share.png" alt="Ride Sharing"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
