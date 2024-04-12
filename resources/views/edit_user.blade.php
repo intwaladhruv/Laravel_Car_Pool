@@ -7,8 +7,20 @@
     <title>Update User</title>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/auth.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .form-container img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
 
+        .form-container img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -61,16 +73,25 @@
                     <div class="form-column login">
                         <h2>Car</h2>
                         @if ($user->car === null)
-                            <form action="/car/store" method="post">
-                        @else
-                            <form action="/car/update" method="post">
+                            <form action="/car/store" method="post" enctype="multipart/form-data">
+                            @else
+                                <form action="/car/update" method="post" enctype="multipart/form-data">
+                                    @method('PUT')
                         @endif
                         @csrf
-                        <input type="text" name="brand" placeholder="Brand" value="{{$user->car ? $user->car->brand : ''}}" required><br>
-                        <input type="text" name="model" placeholder="Model" value="{{$user->car ? $user->car->model : ''}}" required><br>
-                        <input type="text" name="color" placeholder="Color" value="{{$user->car ? $user->car->color : ''}}" required><br>
-                        <input type="text" name="year" placeholder="Year" value="{{$user->car ? $user->car->year : ''}}" required><br>
-                        <input type="text" name="number" placeholder="Number" value="{{$user->car ? $user->car->number : ''}}" required><br>
+                        <input type="text" name="brand" placeholder="Brand"
+                            value="{{ $user->car ? $user->car->brand : '' }}" required><br>
+                        <input type="text" name="model" placeholder="Model"
+                            value="{{ $user->car ? $user->car->model : '' }}" required><br>
+                        <input type="text" name="color" placeholder="Color"
+                            value="{{ $user->car ? $user->car->color : '' }}" required><br>
+                        <input type="text" name="year" placeholder="Year"
+                            value="{{ $user->car ? $user->car->year : '' }}" required><br>
+                        <input type="text" name="number" placeholder="Number"
+                            value="{{ $user->car ? $user->car->number : '' }}" required><br>
+                        <input type="file" name="photo" placeholder="Image"
+                            {{ $user->car === null ? 'required' : '' }}><br>
+                        <img src="/storage/{{ $user->car->photo_name }}" alt="Car Photo">
                         <button type="submit" name="car_save">Submit</button>
                         </form>
                     </div>

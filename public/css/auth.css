@@ -9,6 +9,8 @@
 .form-container {
     max-width: 800px;
     margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -54,6 +56,16 @@
 
 /* Form select styles */
 .form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff; /* Adjust the background color as needed */
+    color: #333; /* Adjust the text color as needed */
+}
+
+.form-container input[type="file"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;

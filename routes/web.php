@@ -29,7 +29,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/user/edit', [UserController::class, 'edit']);
     Route::post('/user/update', [UserController::class, 'update']);
 
-    Route::post('car/store', [CarController::class, 'store']);
+    Route::post('/car/store', [CarController::class, 'store']);
+    Route::put('/car/update', [CarController::class, 'update']);
     Route::resource('rides', RideController::class)->except([
         'show', 'update', 'edit'
     ]);
